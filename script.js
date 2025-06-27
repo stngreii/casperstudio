@@ -42,14 +42,29 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Ambil foto saat tombol ditekan
     captureBtn.addEventListener('click', function () {
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
+        const videoAspect = video.videoWidth / video.videoHeight;
+        const targetAspect = 9 / 16;
         const context = canvas.getContext('2d');
+
+        // Crop agar pas dengan rasio overlay
+        let sx = 0, sy = 0, sWidth = video.videoWidth, sHeight = video.videoHeight;
+        if (videoAspect > targetAspect) {
+            // video lebih lebar → crop sisi kiri-kanan
+            sWidth = video.videoHeight * targetAspect;
+            sx = (video.videoWidth - sWidth) / 2;
+        } else if (videoAspect < targetAspect) {
+            // video lebih tinggi → crop atas-bawah
+            sHeight = video.videoWidth / targetAspect;
+            sy = (video.videoHeight - sHeight) / 2;
+        }
+
+        canvas.width = 1080;
+        canvas.height = 1920;
 
         context.save();
         context.translate(canvas.width, 0);
         context.scale(-1, 1); // flip horizontal agar tidak mirror
-        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        context.drawImage(video, sx, sy, sWidth, sHeight, 0, 0, canvas.width, canvas.height);
         context.restore();
 
         if (currentOverlay) {
