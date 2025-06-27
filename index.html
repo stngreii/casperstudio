@@ -8,39 +8,39 @@
 </head>
 <body>
     <header>
-        <div class="logo">Flash<span>Box</span></div>
+        <img src="filters/logo.jpg" alt="Logo" class="logo"> <!-- Menambahkan logo -->
+        <h1 class="header-title">CASPERBOOTH 1.0</h1> <!-- Menambahkan judul -->
         <nav>
             <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#gallery">Gallery</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="#home" class="nav-link">Home</a></li>
+                <li><a href="#info" class="nav-link">Info</a></li>
             </ul>
         </nav>
     </header>
     
     <section class="hero" id="home">
-        <h1>Create Fun Memories</h1>
-        <p>Turn your photos into playful artworks with our unique photobooth effects. Perfect for parties, weddings, and special occasions.</p>
-        <button class="start-btn">Start</button>
+        <h1>CEKREKK!!</h1>
+        <h2>#CekrekIn Dulu Aja!</h2>
+        <p>Ajak Teman-temanmu foto bareng 11 PSPT 2!!</p>
+        <p>TUNGGU APALAGI??! CEKREK SEKARANG JUGA!</p>
+        <button class="start-btn">CEKREK</button>
         
         <div class="photobooth-frame" id="photobooth" style="display: none;">
             <video id="video" autoplay></video>
             <canvas id="canvas" style="display:none;"></canvas>
-            <div class="capture-btn">Capture</div>
+            <div class="capture-btn">CEKREK</div>
             <div class="overlay-selector">
                 <select id="overlay-select">
                     <option value="">No Overlay</option>
-                    <option value="filters/ovr1.jpg">Overlay 1</option>
-                    <option value="filters/ovr2.jpg">Overlay 2</option>
-                    <option value="filters/ovr3.jpg">Overlay 3</option>
-                    <option value="filters/ovr4.jpg">Overlay 4</option>
-                    <option value="filters/ovr5.jpg">Overlay 5</option>
+                    <option value="filters/OVERLAY1.png">Take A Photo With CASPER!</option>
+                    <option value="filters/OVERLAY2.png">BROADCAST & FILM With CASPER!</option>
+                    <option value="filters/OVERLAY3.png">BRO DO FEST 2.0 With CASPER!</option>
                 </select>
             </div>
         </div>
         
         <div class="edit-tab" style="display: none;">
-            <h2>Edit Your Photo</h2>
+            <h2>EDIT FOTO</h2>
             <div class="edited-photo-container">
                 <canvas id="edited-canvas"></canvas>
             </div>
@@ -48,32 +48,35 @@
                 <div class="overlay-selector">
                     <select id="edit-overlay-select">
                         <option value="">No Overlay</option>
-                        <option value="filters/ovr1.jpg">Overlay 1</option>
-                        <option value="filters/ovr2.jpg">Overlay 2</option>
-                        <option value="filters/ovr3.jpg">Overlay 3</option>
-                        <option value="filters/ovr4.jpg">Overlay 4</option>
-                        <option value="filters/ovr5.jpg">Overlay 5</option>
+                        <option value="filters/OVERLAY1.png">Take A Photo With CASPER!</option>
+                        <option value="filters/OVERLAY2.png">BROADCAST & FILM With CASPER!</option>
+                        <option value="filters/OVERLAY3.png">BRO DO FEST 2.0 With CASPER!</option>
                     </select>
                 </div>
-                <button class="save-btn">Save Photo</button>
+                <button class="save-btn">Save Foto</button>
             </div>
         </div>
 
         <div class="grid"></div>
     </section>
+
+    <section class="info" id="info" style="display: none;">
+        <h2>THE CREATOR!</h2>
+        <div class="profile">
+            <img src="filters/creator.jpg" alt="Creator" class="profile-pic"> <!-- Ganti dengan foto pembuat -->
+            <div class="profile-info">
+                <h3>Nama Pembuat</h3>
+                <p>Instagram: <a href="https://instagram.com/username" target="_blank">@username</a></p>
+                <p>YouTube: <a href="https://youtube.com/channel/yourchannel" target="_blank">Your Channel</a></p>
+            </div>
+        </div>
+    </section>
     
     <footer id="contact">
-        <h2>Ready to Create Something Amazing?</h2>
-        <p>Book our photobooth for your next event</p>
+        <h2>PRESENTED BY CASPERNOVA</h2>
+        <p>Cekrekin Setiap Momentmu!</p>
         
-        <div class="social-links">
-            <a href="#">Instagram</a>
-            <a href="#">Facebook</a>
-            <a href="#">Twitter</a>
-            <a href="#">TikTok</a>
-        </div>
-        
-        <p class="copyright">© 2023 FlashBox Photobooth. All rights reserved.</p>
+        <p class="copyright">©2025 XI PSPT 2. All rights reserved.</p>
     </footer>
     
     <script src="script.js"></script>
