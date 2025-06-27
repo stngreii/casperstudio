@@ -1,165 +1,234 @@
 /* ea.css */
 
+@import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap');
+
+:root {
+    --primary: #A9A9A9;
+    --secondary: #C0C0C0;
+    --dark: #a0c4ff;
+    --light: #FFFFFF;
+    --accent: #D3D3D3;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Comic Neue', cursive;
+}
+
 body {
-  font-family: 'Comic Neue', cursive;
-  background-image: url('filters/background.jpg');
-  background-size: cover;
-  background-position: center;
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden;
-  color: #a0c4ff;
+    background-image: url('filters/background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-color: var(--light);
+    color: var(--dark);
+    overflow-x: hidden;
 }
 
 header {
-  background: linear-gradient(to right, #a0c4ff, #b0e0e6);
-  color: white;
-  padding: 40px 0;
-  text-align: center;
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 1000;
-  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(to right, #a0c4ff, #b0e0e6);
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
 }
 
 .logo {
-  width: 100px;
-  margin-bottom: 10px;
+    width: 100px;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 10px;
 }
 
 .header-title {
-  font-size: 36px;
-  font-weight: bold;
-  margin: 0;
+    font-size: 36px;
+    font-weight: bold;
+    margin: 0;
+    animation: fadeIn 1s;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
 nav ul {
-  list-style: none;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-  margin-top: 10px;
+    list-style: none;
+    display: flex;
+    gap: 2rem;
 }
 
 nav a {
-  text-decoration: none;
-  color: white;
-  font-size: 18px;
-  transition: 0.3s;
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+    transition: all 0.3s ease;
 }
 
 nav a:hover {
-  color: #f0f0f0;
+    color: var(--primary);
 }
 
 .hero {
-  padding-top: 160px;
-  text-align: center;
-  background-color: rgba(255, 255, 255, 0.8);
-  border-radius: 10px;
+    height: auto;
+    min-height: 100vh;
+    padding: 100px 5% 40px;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
 }
 
-.start-btn, .capture-btn, .save-btn {
-  padding: 12px 24px;
-  background-color: #a0c4ff;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  margin-top: 20px;
+.start-btn {
+    padding: 15px 30px;
+    font-size: 18px;
+    background-color: #a0c4ff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 20px;
+}
+
+.start-btn:hover {
+    background-color: #b0e0e6;
 }
 
 .photobooth-frame {
-  position: relative;
-  max-width: 360px;
-  aspect-ratio: 9/16;
-  margin: 20px auto;
-  background: black;
-  border-radius: 10px;
-  overflow: hidden;
+    position: relative;
+    width: 100%;
+    max-width: 360px;
+    aspect-ratio: 9 / 16;
+    margin: 20px auto;
+    background-color: black;
+    border-radius: 10px;
+    overflow: hidden;
 }
 
 #video {
-  width: auto;
-  height: 100%;
-  object-fit: cover;
-  transform: scaleX(1); /* non-mirror */
+    width: auto;
+    height: 100%;
+    object-fit: cover;
+    transform: scaleX(1);
 }
 
 #live-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  pointer-events: none;
-  z-index: 2;
-  display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    pointer-events: none;
+    z-index: 2;
+    display: none;
 }
 
 .capture-container {
-  text-align: center;
-  margin: 10px 0 30px;
+    text-align: center;
+    margin: 20px 0;
 }
 
-.edit-tab {
-  text-align: center;
-  margin-top: 20px;
-}
-
-.edited-photo-container {
-  position: relative;
-  max-width: 360px;
-  margin: 0 auto;
-  border-radius: 10px;
-  overflow: hidden;
-  background: lightgray;
-}
-
-#edited-canvas {
-  width: 100%;
-  height: auto;
+.capture-btn {
+    padding: 12px 24px;
+    background-color: #a0c4ff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
 }
 
 .overlay-selector {
-  margin-top: 10px;
-  background: rgba(255,255,255,0.8);
-  padding: 5px;
-  border-radius: 5px;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 5px;
+    border-radius: 5px;
+    z-index: 3;
 }
 
-.profile {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 20px;
+.edit-tab {
+    text-align: center;
+    margin-top: 20px;
 }
 
-.profile-pic {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  margin-right: 20px;
+.edited-photo-container {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    margin: 0 auto;
+    background-color: lightgray;
+    border-radius: 10px;
+    overflow: hidden;
 }
 
-.profile-info {
-  text-align: left;
+#edited-canvas {
+    width: 100%;
+    height: auto;
+}
+
+.edit-controls {
+    margin-top: 10px;
 }
 
 footer {
-  background-color: #a0c4ff;
-  color: white;
-  text-align: center;
-  padding: 3rem 5%;
+    background-color: var(--dark);
+    color: var(--light);
+    padding: 3rem 5%;
+    text-align: center;
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px;
+}
+
+.profile-pic {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-right: 20px;
+}
+
+.profile-info {
+    text-align: left;
 }
 
 @media (max-width: 600px) {
-  .photobooth-frame,
-  .edited-photo-container {
+    .photobooth-frame, .edited-photo-container {
+        width: 100%;
+        height: auto;
+    }
+    .hero h1 {
+        font-size: 2rem;
+    }
+}
+
+.grid {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 20px;
+    justify-content: center;
+}
+
+.grid-item {
+    margin: 5px;
+    width: 100px;
+    height: 100px;
+}
+
+.grid-item img {
     width: 100%;
-    height: auto;
-  }
+    height: 100%;
+    object-fit: cover;
 }
