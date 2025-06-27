@@ -36,6 +36,11 @@ document.addEventListener('DOMContentLoaded', function() {
             photoboothFrame.style.opacity = 1; // Fade in effect
         }, 10);
     });
+context.save();
+context.translate(canvas.width, 0);
+context.scale(-1, 1); // flip horizontal
+context.drawImage(video, 0, 0, canvas.width, canvas.height);
+context.restore();
 
     // Ambil foto saat tombol ditekan
     captureBtn.addEventListener('click', function() {
