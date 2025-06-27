@@ -143,3 +143,72 @@ nav a:hover {
   top: 10px;
   left: 10px;
   background: rgba(255, 255, 255, 0.8);
+  padding: 5px;
+  border-radius: 5px;
+  z-index: 3;
+}
+
+.edit-tab {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.edited-photo-container {
+  position: relative;
+  width: 100%;
+  max-width: 360px;
+  aspect-ratio: 9 / 16;
+  margin: 0 auto;
+  background-color: lightgray;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+#edited-canvas {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 9 / 16;
+  object-fit: contain;
+  display: block;
+}
+
+.edit-controls {
+  margin-top: 10px;
+}
+
+footer {
+  background-color: var(--dark);
+  color: var(--light);
+  padding: 3rem 5%;
+  text-align: center;
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px;
+}
+
+.profile-pic {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-right: 20px;
+}
+
+.profile-info {
+  text-align: left;
+}
+
+@media (max-width: 600px) {
+  .photobooth-frame,
+  .edited-photo-container {
+    width: 100%;
+    height: auto;
+  }
+
+  .hero h1 {
+    font-size: 2rem;
+  }
+}
