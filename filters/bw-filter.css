@@ -1,0 +1,4 @@
+/* Filter Hitam-Putih */
+#video {
+    filter: grayscale(100%);
+}
