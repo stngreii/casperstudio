@@ -1,179 +1,165 @@
-/* === ea.css (CSS External File) === */
-@import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap');
+/* ea.css */
 
 body {
-    font-family: 'Comic Neue', cursive;
-    background-image: url('filters/background.jpg');
-    background-size: cover;
-    background-position: center;
-    margin: 0;
-    padding: 0;
-    color: #333;
-    overflow-x: hidden;
+  font-family: 'Comic Neue', cursive;
+  background-image: url('filters/background.jpg');
+  background-size: cover;
+  background-position: center;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  color: #a0c4ff;
 }
 
 header {
-    background: linear-gradient(to right, #a0c4ff, #b0e0e6);
-    color: white;
-    padding: 40px 0;
-    text-align: center;
-    position: relative;
-    z-index: 10;
+  background: linear-gradient(to right, #a0c4ff, #b0e0e6);
+  color: white;
+  padding: 40px 0;
+  text-align: center;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
 }
 
 .logo {
-    width: 100px;
-    margin-bottom: 10px;
+  width: 100px;
+  margin-bottom: 10px;
 }
 
 .header-title {
-    font-size: 36px;
-    font-weight: bold;
-    margin: 0;
-    animation: fadeIn 1s;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+  font-size: 36px;
+  font-weight: bold;
+  margin: 0;
 }
 
 nav ul {
-    list-style: none;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
+  list-style: none;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 10px;
 }
 
 nav a {
-    color: white;
-    text-decoration: none;
-    font-size: 18px;
-    transition: 0.3s;
+  text-decoration: none;
+  color: white;
+  font-size: 18px;
+  transition: 0.3s;
 }
 
 nav a:hover {
-    color: #555;
+  color: #f0f0f0;
 }
 
 .hero {
-    text-align: center;
-    padding: 100px 20px;
-    background-color: rgba(255, 255, 255, 0.8);
-    border-radius: 10px;
-    padding-top: 120px;
+  padding-top: 160px;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 10px;
 }
 
-.start-btn {
-    padding: 15px 30px;
-    font-size: 18px;
-    background-color: #a0c4ff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 20px;
-    transition: background-color 0.3s;
-}
-
-.start-btn:hover {
-    background-color: #b0e0e6;
+.start-btn, .capture-btn, .save-btn {
+  padding: 12px 24px;
+  background-color: #a0c4ff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 20px;
 }
 
 .photobooth-frame {
-    position: relative;
-    aspect-ratio: 9/16;
-    width: 100%;
-    max-width: 360px;
-    margin: 20px auto;
-    background: black;
-    overflow: hidden;
-    border-radius: 10px;
+  position: relative;
+  max-width: 360px;
+  aspect-ratio: 9/16;
+  margin: 20px auto;
+  background: black;
+  border-radius: 10px;
+  overflow: hidden;
 }
 
 #video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transform: scaleX(1);
+  width: auto;
+  height: 100%;
+  object-fit: cover;
+  transform: scaleX(1); /* non-mirror */
 }
 
 #live-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    pointer-events: none;
-    z-index: 2;
-    display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  z-index: 2;
+  display: none;
 }
 
 .capture-container {
-    text-align: center;
-    margin-top: 20px;
-    margin-bottom: 40px;
+  text-align: center;
+  margin: 10px 0 30px;
 }
 
-.capture-btn {
-    padding: 12px 24px;
-    background-color: #a0c4ff;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
+.edit-tab {
+  text-align: center;
+  margin-top: 20px;
 }
 
 .edited-photo-container {
-    position: relative;
-    width: 100%;
-    max-width: 500px;
-    margin: 0 auto;
-    background-color: lightgray;
-    border-radius: 10px;
-    overflow: hidden;
+  position: relative;
+  max-width: 360px;
+  margin: 0 auto;
+  border-radius: 10px;
+  overflow: hidden;
+  background: lightgray;
 }
 
 #edited-canvas {
-    width: 100%;
-    height: auto;
+  width: 100%;
+  height: auto;
 }
 
-.edit-controls {
-    margin-top: 10px;
-}
-
-footer {
-    text-align: center;
-    padding: 20px 0;
-    background-color: #a0c4ff;
-    color: white;
+.overlay-selector {
+  margin-top: 10px;
+  background: rgba(255,255,255,0.8);
+  padding: 5px;
+  border-radius: 5px;
 }
 
 .profile {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px;
 }
 
 .profile-pic {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    margin-right: 20px;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-right: 20px;
 }
 
 .profile-info {
-    text-align: left;
+  text-align: left;
 }
 
-/* Responsive */
+footer {
+  background-color: #a0c4ff;
+  color: white;
+  text-align: center;
+  padding: 3rem 5%;
+}
+
 @media (max-width: 600px) {
-    .photobooth-frame, .edited-photo-container {
-        width: 100%;
-        height: auto;
-    }
+  .photobooth-frame,
+  .edited-photo-container {
+    width: 100%;
+    height: auto;
+  }
 }
