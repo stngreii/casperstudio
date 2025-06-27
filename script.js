@@ -1,4 +1,6 @@
-document.addEventListener('DOMContentLoaded', function() {
+// script.js
+
+document.addEventListener('DOMContentLoaded', function () {
     const video = document.getElementById('video');
     const canvas = document.getElementById('canvas');
     const editedCanvas = document.getElementById('edited-canvas');
@@ -17,126 +19,110 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Minta izin akses kamera
     navigator.mediaDevices.getUserMedia({
-  video: {
-    facingMode: 'user',
-    width: { ideal: 1080 },
-    height: { ideal: 1920 },
-    aspectRatio: 9 / 16
-         .then(function(stream) {
-            video.srcObject = stream; // Tampilkan aliran video di elemen video
-            console.log("Kamera diizinkan");
-                .catch(function(err) {
-            console.error("Kamera ditolak: ", err);
-  }
-})
-    .then(function(stream) {
-            video.srcObject = stream; // Tampilkan aliran video di elemen video
-            console.log("Kamera diizinkan");
-                .catch(function(err) {
-            console.error("Kamera ditolak: ", err);
-    }
-});
-    
+        video: {
+            facingMode: 'user',
+            width: { ideal: 1080 },
+            height: { ideal: 1920 },
+            aspectRatio: 9 / 16
+        }
+    }).then(function (stream) {
+        video.srcObject = stream;
+        console.log("Kamera diizinkan");
+    }).catch(function (err) {
+        console.error("Kamera ditolak: ", err);
+    });
+
     // Tampilkan frame photobooth saat tombol Start ditekan
-    startBtn.addEventListener('click', function() {
+    startBtn.addEventListener('click', function () {
         photoboothFrame.style.display = 'block';
         setTimeout(() => {
-            photoboothFrame.style.opacity = 1; // Fade in effect
+            photoboothFrame.style.opacity = 1;
         }, 10);
     });
-context.save();
-context.translate(canvas.width, 0);
-context.scale(-1, 1); // flip horizontal
-context.drawImage(video, 0, 0, canvas.width, canvas.height);
-context.restore();
 
     // Ambil foto saat tombol ditekan
-    captureBtn.addEventListener('click', function() {
-        // Mengatur ukuran kanvas menjadi 1080 x 1920
+    captureBtn.addEventListener('click', function () {
         canvas.width = video.videoWidth;
         canvas.height = video.videoHeight;
         const context = canvas.getContext('2d');
+
+        context.save();
+        context.translate(canvas.width, 0);
+        context.scale(-1, 1); // flip horizontal agar tidak mirror
         context.drawImage(video, 0, 0, canvas.width, canvas.height);
-        
-        // Jika ada overlay, gambar overlay di atas foto
+        context.restore();
+
         if (currentOverlay) {
             overlayImage.src = currentOverlay;
-            overlayImage.onload = function() {
+            overlayImage.onload = function () {
                 context.drawImage(overlayImage, 0, 0, canvas.width, canvas.height);
-                // Simpan foto ke galeri setelah overlay digambar
                 const imgData = canvas.toDataURL('image/png');
-                capturedImage = imgData; // Simpan gambar yang diambil
+                capturedImage = imgData;
                 showEditTab();
             };
         } else {
-            // Simpan foto ke galeri jika tidak ada overlay
             const imgData = canvas.toDataURL('image/png');
-            capturedImage = imgData; // Simpan gambar yang diambil
+            capturedImage = imgData;
             showEditTab();
         }
     });
 
     function showEditTab() {
-        editTab.style.display = 'block'; // Tampilkan tab edit
+        editTab.style.display = 'block';
         const editedContext = editedCanvas.getContext('2d');
         editedCanvas.width = canvas.width;
         editedCanvas.height = canvas.height;
-        editedContext.drawImage(canvas, 0, 0); // Tampilkan gambar di canvas edit
+        editedContext.drawImage(canvas, 0, 0);
     }
 
-    // Ganti overlay saat dipilih
-   const liveOverlay = document.getElementById('live-overlay');
-overlaySelect.addEventListener('change', function() {
-    currentOverlay = this.value;
-    if (currentOverlay) {
-        liveOverlay.src = currentOverlay;
-        liveOverlay.style.display = 'block';
-    } else {
-        liveOverlay.style.display = 'none';
-    }
-});
+    const liveOverlay = document.getElementById('live-overlay');
+    overlaySelect.addEventListener('change', function () {
+        currentOverlay = this.value;
+        if (currentOverlay) {
+            liveOverlay.src = currentOverlay;
+            liveOverlay.style.display = 'block';
+        } else {
+            liveOverlay.style.display = 'none';
+        }
+    });
 
-
-    // Ganti overlay saat dipilih di tab edit
-    editOverlaySelect.addEventListener('change', function() {
+    editOverlaySelect.addEventListener('change', function () {
         const editedContext = editedCanvas.getContext('2d');
-        editedContext.clearRect(0, 0, editedCanvas.width, editedCanvas.height); // Hapus gambar sebelumnya
+        editedContext.clearRect(0, 0, editedCanvas.width, editedCanvas.height);
         const img = new Image();
-        img.src = capturedImage; // Gambar yang diambil
-        img.onload = function() {
-            editedContext.drawImage(img, 0, 0); // Gambar di canvas edit
+        img.src = capturedImage;
+        img.onload = function () {
+            editedContext.drawImage(img, 0, 0);
             if (this.value) {
-                overlayImage.src = this.value; // Gambar overlay
-                overlayImage.onload = function() {
-                    editedContext.drawImage(overlayImage, 0, 0, editedCanvas.width, editedCanvas.height); // Gambar overlay
+                overlayImage.src = this.value;
+                overlayImage.onload = function () {
+                    editedContext.drawImage(overlayImage, 0, 0, editedCanvas.width, editedCanvas.height);
                 };
             }
         };
     });
 
-    // Simpan foto
-    document.querySelector('.save-btn').addEventListener('click', function() {
+    document.querySelector('.save-btn').addEventListener('click', function () {
         const link = document.createElement('a');
         link.href = editedCanvas.toDataURL('image/png');
         link.download = 'captured-photo.png';
         link.click();
     });
 
-    // Navigasi antara Home dan Info
     navLinks.forEach(link => {
-        link.addEventListener('click', function(event) {
-            event.preventDefault(); // Mencegah perilaku default
-            const target = this.getAttribute('href'); // Mendapatkan target dari href
+        link.addEventListener('click', function (event) {
+            event.preventDefault();
+            const target = this.getAttribute('href');
 
             if (target === '#home') {
-                homeSection.style.display = 'block'; // Tampilkan Home
-                infoSection.style.display = 'none'; // Sembunyikan Info
-                photoboothFrame.style.display = 'none'; // Sembunyikan frame kamera
-                editTab.style.display = 'none'; // Sembunyikan tab edit
+                homeSection.style.display = 'block';
+                infoSection.style.display = 'none';
+                photoboothFrame.style.display = 'none';
+                editTab.style.display = 'none';
             } else if (target === '#info') {
-                homeSection.style.display = 'none'; // Sembunyikan Home
-                infoSection.style.display = 'block'; // Tampilkan Info
-                window.scrollTo(0, infoSection.offsetTop); // Scroll ke bagian Info
+                homeSection.style.display = 'none';
+                infoSection.style.display = 'block';
+                window.scrollTo(0, infoSection.offsetTop);
             }
         });
     });
