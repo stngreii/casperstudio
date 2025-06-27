@@ -25,14 +25,10 @@ document.addEventListener('DOMContentLoaded', function() {
          .then(function(stream) {
             video.srcObject = stream; // Tampilkan aliran video di elemen video
             console.log("Kamera diizinkan");
+                .catch(function(err) {
+            console.error("Kamera ditolak: ", err);
   }
 })
-     
-        
-        .catch(function(err) {
-            console.error("Kamera ditolak: ", err);
-        });
-
     // Tampilkan frame photobooth saat tombol Start ditekan
     startBtn.addEventListener('click', function() {
         photoboothFrame.style.display = 'block';
