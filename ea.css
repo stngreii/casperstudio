@@ -342,3 +342,18 @@ footer {
     z-index: 2;
     display: none;
 }
+
+.capture-container {
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 40px;
+}
+
+.capture-btn {
+  padding: 12px 24px;
+  background-color: #a0c4ff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
