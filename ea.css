@@ -1,20 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap'); /* Mengimpor font Comic Neue */
+
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
+    font-family: 'Comic Neue', cursive; /* Menggunakan font Comic Neue */
+    background-image: url('filters/background.jpg'); /* Mengatur background menggunakan gambar */
+    background-size: cover; /* Menyesuaikan ukuran background */
+    background-position: center; /* Memusatkan background */
     margin: 0;
     padding: 0;
 }
 
 header {
-    background-color: #ff4081;
+    background: linear-gradient(to right, #a0c4ff, #b0e0e6); /* Gradient biru kalem dan abu kebiruan */
     color: white;
-    padding: 10px 0;
+    padding: 40px 0; /* Memperluas jarak atas dan bawah header */
     text-align: center;
+    position: relative; /* Menambahkan posisi relatif untuk mengatur z-index */
+    z-index: 10; /* Menempatkan header di atas konten lainnya */
 }
 
 .logo {
-    font-size: 24px;
+    width: 100px; /* Ukuran logo */
+    margin-bottom: 10px; /* Jarak antara logo dan judul */
+}
+
+.header-title {
+    font-size: 36px; /* Ukuran font lebih besar */
     font-weight: bold;
+    margin: 0; /* Menghilangkan margin */
+    animation: fadeIn 1s; /* Menambahkan animasi */
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 nav ul {
@@ -30,26 +52,30 @@ nav ul li {
 nav ul li a {
     color: white;
     text-decoration: none;
+    font-size: 18px; /* Ukuran font untuk navigasi */
 }
 
 .hero {
     text-align: center;
-    padding: 50px 20px;
+    padding: 100px 20px; /* Menambahkan padding atas untuk menghindari tumpang tindih dengan header */
+    background-color: rgba(255, 255, 255, 0.8); /* Warna latar belakang untuk hero */
+    border-radius: 10px; /* Sudut membulat */
 }
 
 .start-btn {
     padding: 15px 30px;
     font-size: 18px;
-    background-color: #ff4081;
+    background-color: #a0c4ff; /* Warna biru kalem */
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
+    margin-top: 20px; /* Menambahkan jarak atas untuk tombol */
 }
 
 .start-btn:hover {
-    background-color: #e91e63;
+    background-color: #b0e0e6; /* Warna biru lebih terang saat hover */
 }
 
 .photobooth-frame {
@@ -80,7 +106,7 @@ nav ul li a {
     left: 50%;
     transform: translateX(-50%);
     padding: 10px 20px;
-    background-color: #ff4081;
+    background-color: #a0c4ff; /* Warna biru kalem */
     color: white;
     border: none;
     border-radius: 5px;
@@ -143,8 +169,27 @@ nav ul li a {
 footer {
     text-align: center;
     padding: 20px 0;
-    background-color: #ff4081;
+    background-color: #a0c4ff; /* Warna biru kalem */
     color: white;
+}
+
+/* Profil Pembuat */
+.profile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px;
+}
+
+.profile-pic {
+    width: 100px; /* Ukuran foto profil */
+    height: 100px; /* Ukuran foto profil */
+    border-radius: 50%; /* Membuat foto profil menjadi bulat */
+    margin-right: 20px; /* Jarak antara foto dan informasi */
+}
+
+.profile-info {
+    text-align: left; /* Rata kiri untuk informasi profil */
 }
 
 /* Media Queries for Mobile */
@@ -159,7 +204,7 @@ footer {
 :root {
     --primary: #A9A9A9; /* Abu-abu */
     --secondary: #C0C0C0; /* Silver */
-    --dark: #000000; /* Hitam */
+    --dark: #a0c4ff; /* Hitam */
     --light: #FFFFFF; /* Putih */
     --accent: #D3D3D3; /* Warna abu-abu muda */
 }
