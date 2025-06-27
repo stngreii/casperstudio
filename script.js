@@ -11,6 +11,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const photoboothFrame = document.getElementById('photobooth');
     const editTab = document.querySelector('.edit-tab');
     const startBtn = document.querySelector('.start-btn');
+    const infoSection = document.querySelector('.info');
+    const homeSection = document.querySelector('.hero');
+    const navLinks = document.querySelectorAll('.nav-link');
 
     // Minta izin akses kamera
     navigator.mediaDevices.getUserMedia({ video: true })
@@ -32,32 +35,41 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Ambil foto saat tombol ditekan
     captureBtn.addEventListener('click', function() {
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
+        // Mengatur ukuran kanvas menjadi 1080 x 1920
+        canvas.width = 1080;
+        canvas.height = 1920;
         const context = canvas.getContext('2d');
         context.drawImage(video, 0, 0, canvas.width, canvas.height);
         
         // Jika ada overlay, gambar overlay di atas foto
         if (currentOverlay) {
-            context.drawImage(overlayImage, 0, 0, canvas.width, canvas.height);
+            overlayImage.src = currentOverlay;
+            overlayImage.onload = function() {
+                context.drawImage(overlayImage, 0, 0, canvas.width, canvas.height);
+                // Simpan foto ke galeri setelah overlay digambar
+                const imgData = canvas.toDataURL('image/png');
+                capturedImage = imgData; // Simpan gambar yang diambil
+                showEditTab();
+            };
+        } else {
+            // Simpan foto ke galeri jika tidak ada overlay
+            const imgData = canvas.toDataURL('image/png');
+            capturedImage = imgData; // Simpan gambar yang diambil
+            showEditTab();
         }
-        
-        // Simpan foto ke galeri
-        const imgData = canvas.toDataURL('image/png');
-        capturedImage = imgData; // Simpan gambar yang diambil
+    });
+
+    function showEditTab() {
         editTab.style.display = 'block'; // Tampilkan tab edit
         const editedContext = editedCanvas.getContext('2d');
         editedCanvas.width = canvas.width;
         editedCanvas.height = canvas.height;
         editedContext.drawImage(canvas, 0, 0); // Tampilkan gambar di canvas edit
-    });
+    }
 
     // Ganti overlay saat dipilih
     overlaySelect.addEventListener('change', function() {
         currentOverlay = this.value;
-        if (currentOverlay) {
-            overlayImage.src = currentOverlay;
-        }
     });
 
     // Ganti overlay saat dipilih di tab edit
@@ -83,5 +95,24 @@ document.addEventListener('DOMContentLoaded', function() {
         link.href = editedCanvas.toDataURL('image/png');
         link.download = 'captured-photo.png';
         link.click();
+    });
+
+    // Navigasi antara Home dan Info
+    navLinks.forEach(link => {
+        link.addEventListener('click', function(event) {
+            event.preventDefault(); // Mencegah perilaku default
+            const target = this.getAttribute('href'); // Mendapatkan target dari href
+
+            if (target === '#home') {
+                homeSection.style.display = 'block'; // Tampilkan Home
+                infoSection.style.display = 'none'; // Sembunyikan Info
+                photoboothFrame.style.display = 'none'; // Sembunyikan frame kamera
+                editTab.style.display = 'none'; // Sembunyikan tab edit
+            } else if (target === '#info') {
+                homeSection.style.display = 'none'; // Sembunyikan Home
+                infoSection.style.display = 'block'; // Tampilkan Info
+                window.scrollTo(0, infoSection.offsetTop); // Scroll ke bagian Info
+            }
+        });
     });
 });
