@@ -16,11 +16,20 @@ document.addEventListener('DOMContentLoaded', function() {
     const navLinks = document.querySelectorAll('.nav-link');
 
     // Minta izin akses kamera
-    navigator.mediaDevices.getUser Media({ video: true })
+    navigator.mediaDevices.getUserMedia({ 
+    video: {
+        width: { ideal: 1080 },
+        height: { ideal: 1920 },
+        aspectRatio: 9/16,
+        facingMode: 'user' // untuk kamera depan
+    }
+})
+
         .then(function(stream) {
             video.srcObject = stream; // Tampilkan aliran video di elemen video
             console.log("Kamera diizinkan");
         })
+        
         .catch(function(err) {
             console.error("Kamera ditolak: ", err);
         });
@@ -35,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Ambil foto saat tombol ditekan
     captureBtn.addEventListener('click', function() {
-        // Mengatur ukuran kanvas sesuai dengan ukuran video
+        // Mengatur ukuran kanvas menjadi 1080 x 1920
         canvas.width = video.videoWidth;
         canvas.height = video.videoHeight;
         const context = canvas.getContext('2d');
@@ -68,9 +77,17 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Ganti overlay saat dipilih
-    overlaySelect.addEventListener('change', function() {
-        currentOverlay = this.value;
-    });
+   const liveOverlay = document.getElementById('live-overlay');
+overlaySelect.addEventListener('change', function() {
+    currentOverlay = this.value;
+    if (currentOverlay) {
+        liveOverlay.src = currentOverlay;
+        liveOverlay.style.display = 'block';
+    } else {
+        liveOverlay.style.display = 'none';
+    }
+});
+
 
     // Ganti overlay saat dipilih di tab edit
     editOverlaySelect.addEventListener('change', function() {
