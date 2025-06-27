@@ -1,335 +1,118 @@
-@import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap'); /* Mengimpor font Comic Neue */
+document.addEventListener('DOMContentLoaded', function() {
+    const video = document.getElementById('video');
+    const canvas = document.getElementById('canvas');
+    const editedCanvas = document.getElementById('edited-canvas');
+    const captureBtn = document.querySelector('.capture-btn');
+    const overlaySelect = document.getElementById('overlay-select');
+    const editOverlaySelect = document.getElementById('edit-overlay-select');
+    const overlayImage = new Image();
+    let currentOverlay = '';
+    let capturedImage = null;
+    const photoboothFrame = document.getElementById('photobooth');
+    const editTab = document.querySelector('.edit-tab');
+    const startBtn = document.querySelector('.start-btn');
+    const infoSection = document.querySelector('.info');
+    const homeSection = document.querySelector('.hero');
+    const navLinks = document.querySelectorAll('.nav-link');
 
-body {
-    font-family: 'Comic Neue', cursive; /* Menggunakan font Comic Neue */
-    background-image: url('filters/background.jpg'); /* Mengatur background menggunakan gambar */
-    background-size: cover; /* Menyesuaikan ukuran background */
-    background-position: center; /* Memusatkan background */
-    margin: 0;
-    padding: 0;
-}
+    // Minta izin akses kamera
+    navigator.mediaDevices.getUserMedia({ video: true })
+        .then(function(stream) {
+            video.srcObject = stream; // Tampilkan aliran video di elemen video
+            console.log("Kamera diizinkan");
+        })
+        .catch(function(err) {
+            console.error("Kamera ditolak: ", err);
+        });
 
-header {
-    background: linear-gradient(to right, #a0c4ff, #b0e0e6); /* Gradient biru kalem dan abu kebiruan */
-    color: white;
-    padding: 40px 0; /* Memperluas jarak atas dan bawah header */
-    text-align: center;
-    position: relative; /* Menambahkan posisi relatif untuk mengatur z-index */
-    z-index: 10; /* Menempatkan header di atas konten lainnya */
-}
+    // Tampilkan frame photobooth saat tombol Start ditekan
+    startBtn.addEventListener('click', function() {
+        photoboothFrame.style.display = 'block';
+        setTimeout(() => {
+            photoboothFrame.style.opacity = 1; // Fade in effect
+        }, 10);
+    });
 
-.logo {
-    width: 100px; /* Ukuran logo */
-    margin-bottom: 10px; /* Jarak antara logo dan judul */
-}
+    // Ambil foto saat tombol ditekan
+    captureBtn.addEventListener('click', function() {
+        // Mengatur ukuran kanvas menjadi 1080 x 1920
+        canvas.width = 1080;
+        canvas.height = 1920;
+        const context = canvas.getContext('2d');
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        
+        // Jika ada overlay, gambar overlay di atas foto
+        if (currentOverlay) {
+            overlayImage.src = currentOverlay;
+            overlayImage.onload = function() {
+                context.drawImage(overlayImage, 0, 0, canvas.width, canvas.height);
+                // Simpan foto ke galeri setelah overlay digambar
+                const imgData = canvas.toDataURL('image/png');
+                capturedImage = imgData; // Simpan gambar yang diambil
+                showEditTab();
+            };
+        } else {
+            // Simpan foto ke galeri jika tidak ada overlay
+            const imgData = canvas.toDataURL('image/png');
+            capturedImage = imgData; // Simpan gambar yang diambil
+            showEditTab();
+        }
+    });
 
-.header-title {
-    font-size: 36px; /* Ukuran font lebih besar */
-    font-weight: bold;
-    margin: 0; /* Menghilangkan margin */
-    animation: fadeIn 1s; /* Menambahkan animasi */
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
+    function showEditTab() {
+        editTab.style.display = 'block'; // Tampilkan tab edit
+        const editedContext = editedCanvas.getContext('2d');
+        editedCanvas.width = canvas.width;
+        editedCanvas.height = canvas.height;
+        editedContext.drawImage(canvas, 0, 0); // Tampilkan gambar di canvas edit
     }
-    to {
-        opacity: 1;
-    }
-}
 
-nav ul {
-    list-style: none;
-    padding: 0;
-}
+    // Ganti overlay saat dipilih
+    overlaySelect.addEventListener('change', function() {
+        currentOverlay = this.value;
+    });
 
-nav ul li {
-    display: inline;
-    margin: 0 15px;
-}
+    // Ganti overlay saat dipilih di tab edit
+    editOverlaySelect.addEventListener('change', function() {
+        const editedContext = editedCanvas.getContext('2d');
+        editedContext.clearRect(0, 0, editedCanvas.width, editedCanvas.height); // Hapus gambar sebelumnya
+        const img = new Image();
+        img.src = capturedImage; // Gambar yang diambil
+        img.onload = function() {
+            editedContext.drawImage(img, 0, 0); // Gambar di canvas edit
+            if (this.value) {
+                overlayImage.src = this.value; // Gambar overlay
+                overlayImage.onload = function() {
+                    editedContext.drawImage(overlayImage, 0, 0, editedCanvas.width, editedCanvas.height); // Gambar overlay
+                };
+            }
+        };
+    });
 
-nav ul li a {
-    color: white;
-    text-decoration: none;
-    font-size: 18px; /* Ukuran font untuk navigasi */
-}
+    // Simpan foto
+    document.querySelector('.save-btn').addEventListener('click', function() {
+        const link = document.createElement('a');
+        link.href = editedCanvas.toDataURL('image/png');
+        link.download = 'captured-photo.png';
+        link.click();
+    });
 
-.hero {
-    text-align: center;
-    padding: 100px 20px; /* Menambahkan padding atas untuk menghindari tumpang tindih dengan header */
-    background-color: rgba(255, 255, 255, 0.8); /* Warna latar belakang untuk hero */
-    border-radius: 10px; /* Sudut membulat */
-}
+    // Navigasi antara Home dan Info
+    navLinks.forEach(link => {
+        link.addEventListener('click', function(event) {
+            event.preventDefault(); // Mencegah perilaku default
+            const target = this.getAttribute('href'); // Mendapatkan target dari href
 
-.start-btn {
-    padding: 15px 30px;
-    font-size: 18px;
-    background-color: #a0c4ff; /* Warna biru kalem */
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    margin-top: 20px; /* Menambahkan jarak atas untuk tombol */
-}
-
-.start-btn:hover {
-    background-color: #b0e0e6; /* Warna biru lebih terang saat hover */
-}
-
-.photobooth-frame {
-    position: relative;
-    width: 100%; /* Full width */
-    max-width: 500px; /* Max width for larger screens */
-    height: auto; /* Auto height to maintain aspect ratio */
-    overflow: hidden;
-    background-color: lightgray;
-    margin: 20px auto; /* Center the frame */
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    display: none; /* Initially hidden */
-    opacity: 0; /* For animation */
-    transition: opacity 0.5s ease;
-}
-
-#video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Ensure video fills the frame */
-    border-radius: 10px;
-}
-
-.capture-btn {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 10px 20px;
-    background-color: #a0c4ff; /* Warna biru kalem */
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.overlay-selector {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    background: rgba(255, 255, 255, 0.8);
-    padding: 5px;
-    border-radius: 5px;
-}
-
-.edit-tab {
-    text-align: center;
-    margin-top: 20px;
-}
-
-.edited-photo-container {
-    position: relative;
-    width: 100%; /* Full width */
-    max-width: 500px; /* Max width for larger screens */
-    height: auto; /* Auto height to maintain aspect ratio */
-    margin: 0 auto;
-    background-color: lightgray;
-    border-radius: 10px;
-    overflow: hidden;
-}
-
-#edited-canvas {
-    width: 100%;
-    height: auto; /* Auto height to maintain aspect ratio */
-}
-
-.edit-controls {
-    margin-top: 10px;
-}
-
-.grid {
-    display: flex;
-    flex-wrap: wrap;
-    margin-top: 20px;
-    justify-content: center;
-}
-
-.grid-item {
-    margin: 5px;
-    width: 100px; /* Atur ukuran gambar */
-    height: 100px; /* Atur ukuran gambar */
-}
-
-.grid-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-footer {
-    text-align: center;
-    padding: 20px 0;
-    background-color: #a0c4ff; /* Warna biru kalem */
-    color: white;
-}
-
-/* Profil Pembuat */
-.profile {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 20px;
-}
-
-.profile-pic {
-    width: 100px; /* Ukuran foto profil */
-    height: 100px; /* Ukuran foto profil */
-    border-radius: 50%; /* Membuat foto profil menjadi bulat */
-    margin-right: 20px; /* Jarak antara foto dan informasi */
-}
-
-.profile-info {
-    text-align: left; /* Rata kiri untuk informasi profil */
-}
-
-/* Media Queries for Mobile */
-@media (max-width: 600px) {
-    .photobooth-frame, .edited-photo-container {
-        width: 100%; /* Full width on mobile */
-        height: auto; /* Maintain aspect ratio */
-    }
-}
-
-/* Base Styles */
-:root {
-    --primary: #A9A9A9; /* Abu-abu */
-    --secondary: #C0C0C0; /* Silver */
-    --dark: #a0c4ff; /* Hitam */
-    --light: #FFFFFF; /* Putih */
-    --accent: #D3D3D3; /* Warna abu-abu muda */
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
-}
-
-body {
-    background-color: var(--light);
-    color: var(--dark);
-    overflow-x: hidden;
-}
-
-/* Header */
-header {
-    padding: 1.5rem 5%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: var(--light);
-    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
-    position: fixed;
-    width: 100%;
-    z-index: 1000;
-}
-
-.logo {
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: var(--primary);
-}
-
-nav ul {
-    display: flex;
-    list-style: none;
-    gap: 2rem;
-}
-
-nav a {
-    text-decoration: none;
-    color: var(--dark);
-    font-weight: 500;
-    transition: all 0.3s ease;
-}
-
-nav a:hover {
-    color: var(--primary);
-}
-
-/* Hero Section */
-.hero {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 0 5%;
-    background: linear-gradient(135deg, rgba(169,169,169,0.1) 0%, rgba(192,192,192,0.1) 100%);
-    position: relative;
-    overflow: hidden;
-    padding-top: 80px;
-}
-
-.hero h1 {
-    font-size: 3.5rem;
-    margin-bottom: 1.5rem;
-    color: var(--primary);
-}
-
-.btn {
-    padding: 12px 30px;
-    background-color: var(--primary);
-    color: var(--light);
-    border: none;
-    border-radius: 50px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-decoration: none;
-    box-shadow: 0 5px 15px rgba(169, 169, 169, 0.3);
-}
-
-.btn:hover {
-    background-color: var(--secondary);
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(192, 192, 192, 0.3);
-}
-
-/* Photobooth Frame */
-.photobooth-frame {
-    width: 80%;
-    max-width: 800px;
-    height: 500px;
-    margin: 3rem auto;
-    border: 15px solid var(--light);
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-    position: relative;
-    background: url('https://placehold.co/800x500') center/cover;
-}
-
-/* Footer */
-footer {
-    background-color: var(--dark);
-    color: var(--light);
-    padding: 3rem 5%;
-    text-align: center;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-    .hero h1 {
-        font-size: 2.5rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .hero h1 {
-        font-size: 2rem;
-    }
-}
+            if (target === '#home') {
+                homeSection.style.display = 'block'; // Tampilkan Home
+                infoSection.style.display = 'none'; // Sembunyikan Info
+                photoboothFrame.style.display = 'none'; // Sembunyikan frame kamera
+                editTab.style.display = 'none'; // Sembunyikan tab edit
+            } else if (target === '#info') {
+                homeSection.style.display = 'none'; // Sembunyikan Home
+                infoSection.style.display = 'block'; // Tampilkan Info
+                window.scrollTo(0, infoSection.offsetTop); // Scroll ke bagian Info
+            }
+        });
+    });
+});
