@@ -1,84 +1,64 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FlashBox Photobooth</title>
-    <link rel="stylesheet" href="ea.css">
-</head>
-<body>
-    <header>
-        <img src="filters/logo.jpg" alt="Logo" class="logo"> <!-- Menambahkan logo -->
-        <h1 class="header-title">CASPERBOOTH 1.0</h1> <!-- Menambahkan judul -->
-        <nav>
-            <ul>
-                <li><a href="#home" class="nav-link">Home</a></li>
-                <li><a href="#info" class="nav-link">Info</a></li>
-            </ul>
-        </nav>
-    </header>
+<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>FlashBox Photobooth</title> <link rel="stylesheet" href="ea.css"> </head> <body> <header> <img src="filters/logo.jpg" alt="Logo" class="logo"> <!-- Menambahkan logo --> <h1 class="header-title">CASPERBOOTH 1.0</h1> <!-- Menambahkan judul --> <nav> <ul> <li><a href="#home" class="nav-link">Home</a></li> <li><a href="#info" class="nav-link">Info</a></li> </ul> </nav> </header>
+<section class="hero" id="home">
+    <h1>CEKREKK!!</h1>
+    <h2>#CekrekIn Dulu Aja! </h2>
+    <P> Ajak Teman temanmu foto bareng 11 PSPT 2!!</p>
+    <P1>TUNGGU APALAGI??! CEKREK SEKARANG JUGA!</P1>
+    <button class="start-btn">CEKREK</button>
     
-    <section class="hero" id="home">
-        <h1>CEKREKK!!</h1>
-        <h2>#CekrekIn Dulu Aja!</h2>
-        <p>Ajak Teman-temanmu foto bareng 11 PSPT 2!!</p>
-        <p>TUNGGU APALAGI??! CEKREK SEKARANG JUGA!</p>
-        <button class="start-btn">CEKREK</button>
-        
-        <div class="photobooth-frame" id="photobooth" style="display: none;">
-            <video id="video" autoplay></video>
-            <canvas id="canvas" style="display:none;"></canvas>
-            <div class="capture-btn">CEKREK</div>
+    <div class="photobooth-frame" id="photobooth" style="display: none;">
+        <video id="video" autoplay></video>
+        <canvas id="canvas" style="display:none;"></canvas>
+        <div class="capture-btn">CEKREK</div>
+        <div class="overlay-selector">
+            <select id="overlay-select">
+                <option value="">No Overlay</option>
+                <option value="filters/OVERLAY1.png">Take A Photo With CASPER!</option>
+                <option value="filters/OVERLAY2.png">BROADCAST & FILM With CASPER!</option>
+                <option value="filters/OVERLAY3.png">BRO DO FEST 2.0 With CASPER!</option>
+            </select>
+        </div>
+    </div>
+    
+    <div class="edit-tab" style="display: none;">
+        <h2>EDIT FOTO</h2>
+        <div class="edited-photo-container">
+            <canvas id="edited-canvas"></canvas>
+        </div>
+        <div class="edit-controls">
             <div class="overlay-selector">
-                <select id="overlay-select">
+                <select id="edit-overlay-select">
                     <option value="">No Overlay</option>
-                    <option value="filters/OVERLAY1.png">Take A Photo With CASPER!</option>
-                    <option value="filters/OVERLAY2.png">BROADCAST & FILM With CASPER!</option>
-                    <option value="filters/OVERLAY3.png">BRO DO FEST 2.0 With CASPER!</option>
+                <option value="filters/OVERLAY1.png">Take A Photo With CASPER!</option>
+                <option value="filters/OVERLAY2.png">BROADCAST & FILM With CASPER!</option>
+                <option value="filters/OVERLAY3.png">BRO DO FEST 2.0 With CASPER!</option>
                 </select>
             </div>
+            <button class="save-btn">Save Foto</button>
         </div>
-        
-        <div class="edit-tab" style="display: none;">
-            <h2>EDIT FOTO</h2>
-            <div class="edited-photo-container">
-                <canvas id="edited-canvas"></canvas>
-            </div>
-            <div class="edit-controls">
-                <div class="overlay-selector">
-                    <select id="edit-overlay-select">
-                        <option value="">No Overlay</option>
-                        <option value="filters/OVERLAY1.png">Take A Photo With CASPER!</option>
-                        <option value="filters/OVERLAY2.png">BROADCAST & FILM With CASPER!</option>
-                        <option value="filters/OVERLAY3.png">BRO DO FEST 2.0 With CASPER!</option>
-                    </select>
-                </div>
-                <button class="save-btn">Save Foto</button>
-            </div>
-        </div>
+    </div>
 
-        <div class="grid"></div>
-    </section>
+    <div class="grid"></div>
+</section>
 
-    <section class="info" id="info" style="display: none;">
-        <h2>THE CREATOR!</h2>
-        <div class="profile">
-            <img src="filters/creator.jpg" alt="Creator" class="profile-pic"> <!-- Ganti dengan foto pembuat -->
-            <div class="profile-info">
-                <h3>Nama Pembuat</h3>
-                <p>Instagram: <a href="https://instagram.com/username" target="_blank">@username</a></p>
-                <p>YouTube: <a href="https://youtube.com/channel/yourchannel" target="_blank">Your Channel</a></p>
-            </div>
+<section class="info" id="info" style="display: none;">
+    <h2>THE CREATOR!</h2>
+    <div class="profile">
+        <img src="filters/creator.jpg" alt="Creator" class="profile-pic"> <!-- Ganti dengan foto pembuat -->
+        <div class="profile-info">
+            <h3>Nama Pembuat</h3>
+            <p>Instagram: <a href="https://instagram.com/username" target="_blank">@username</a></p>
+            <p>YouTube: <a href="https://youtube.com/channel/yourchannel" target="_blank">Your Channel</a></p>
         </div>
-    </section>
+    </div>
+</section>
+
+<footer id="contact">
+    <h2>PRESENTED BY CASPERNOVA</h2>
+    <p>Cekrekin Setiap Momentmu!</p>
     
-    <footer id="contact">
-        <h2>PRESENTED BY CASPERNOVA</h2>
-        <p>Cekrekin Setiap Momentmu!</p>
-        
-        <p class="copyright">©2025 XI PSPT 2. All rights reserved.</p>
-    </footer>
-    
-    <script src="script.js"></script>
-</body>
-</html>
+    <p class="copyright">©2025 XI PSPT 2. All rights reserved.</p>
+</footer>
+
+<script src="script.js"></script>
+</body> </html>
