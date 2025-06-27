@@ -16,19 +16,18 @@ document.addEventListener('DOMContentLoaded', function() {
     const navLinks = document.querySelectorAll('.nav-link');
 
     // Minta izin akses kamera
-    navigator.mediaDevices.getUserMedia({ 
-    video: {
-        width: { ideal: 1080 },
-        height: { ideal: 1920 },
-        aspectRatio: 9/16,
-        facingMode: 'user' // untuk kamera depan
-    }
-})
-
-        .then(function(stream) {
+    navigator.mediaDevices.getUserMedia({
+  video: {
+    facingMode: 'user',
+    width: { ideal: 1080 },
+    height: { ideal: 1920 },
+    aspectRatio: 9 / 16
+         .then(function(stream) {
             video.srcObject = stream; // Tampilkan aliran video di elemen video
             console.log("Kamera diizinkan");
-        })
+  }
+})
+     
         
         .catch(function(err) {
             console.error("Kamera ditolak: ", err);
