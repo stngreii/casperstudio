@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const navLinks = document.querySelectorAll('.nav-link');
 
     // Minta izin akses kamera
-    navigator.mediaDevices.getUserMedia({ video: true })
+    navigator.mediaDevices.getUser Media({ video: true })
         .then(function(stream) {
             video.srcObject = stream; // Tampilkan aliran video di elemen video
             console.log("Kamera diizinkan");
@@ -35,9 +35,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Ambil foto saat tombol ditekan
     captureBtn.addEventListener('click', function() {
-        // Mengatur ukuran kanvas menjadi 1080 x 1920
-        canvas.width = 1080;
-        canvas.height = 1920;
+        // Mengatur ukuran kanvas sesuai dengan ukuran video
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
         const context = canvas.getContext('2d');
         context.drawImage(video, 0, 0, canvas.width, canvas.height);
         
